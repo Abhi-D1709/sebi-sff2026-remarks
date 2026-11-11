@@ -150,10 +150,6 @@ body.tablet .tabletbar{display:block}
       <label class="chk"><input type="checkbox" id="consent_publish"><span>I agree that SEBI may publish my remarks and the photograph taken at the SEBI kiosk, attributed as selected above, in SEBI's publications, on its website and on its official social media channels. <span class="req" aria-hidden="true">*</span></span></label>
       <div class="err">Please confirm consent to publication, or choose “For SEBI internal use only”.</div>
     </div>
-    <div class="f" data-req id="f_data">
-      <label class="chk"><input type="checkbox" id="consent_data" required><span>I consent to SEBI recording these details and my photograph for its SFF 2026 records, and using my email address (if given) to send me the photograph. <span class="req" aria-hidden="true">*</span></span></label>
-      <div class="err">Please confirm consent to submit.</div>
-    </div>
   </section>
 
   <button class="submit" type="submit" id="sub">Submit</button>
@@ -225,7 +221,6 @@ function validate(){
   const em=$('email').value.trim();chk($('f_email'),!!em&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em));
   const a=document.querySelector('input[name=attribution]:checked');chk($('f_attr'),!a);
   chk($('f_pub'),!!a&&a.value!=='internal_only'&&!$('consent_publish').checked);
-  chk($('f_data'),!$('consent_data').checked);
   if(first){first.scrollIntoView({behavior:'smooth',block:'center'});const i=first.querySelector('input,select,textarea');if(i)setTimeout(()=>i.focus({preventScroll:true}),300);}
   return ok;
 }
@@ -265,7 +260,7 @@ $('f').addEventListener('submit',async ev=>{
   const row={id:uuid(),channel:MODE,title:fd.get('title')||null,full_name:fd.get('full_name').trim(),designation:fd.get('designation').trim(),
     organisation:fd.get('organisation').trim(),country:fd.get('country'),email:(fd.get('email')||'').trim()||null,
     initiatives:fd.getAll('initiatives'),remarks:fd.get('remarks').trim(),attribution:a,
-    consent_publish:a!=='internal_only'&&$('consent_publish').checked,consent_data:$('consent_data').checked,privacy_notice_version:'none-consent-line-v1'};
+    consent_publish:a!=='internal_only'&&$('consent_publish').checked,privacy_notice_version:'none'};
   const btn=$('sub');btn.disabled=true;btn.textContent='Submitting…';
   let queued=false;
   try{await send({...row},photoBlob);}
