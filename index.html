@@ -279,7 +279,7 @@ function reset(){$('f').reset();photoBlob=null;$('preview').style.display='none'
   const b=$('sub');b.disabled=false;b.textContent='Submit';$('thanks').style.display='none';$('formwrap').style.display='block';window.scrollTo(0,0);}
 $('next').addEventListener('click',()=>{clearTimeout(window._t);reset();});
 
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{});
 </script>
 </body>
 </html>
